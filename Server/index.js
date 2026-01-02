@@ -13,7 +13,7 @@ import modelRouter from './Routes/modelRoute.js'
 connectDB();
 const app = express();
 app.use(cors({
-  origin: "http://localhost:5173", // frontend URL
+  origin: "https://bodyiq.onrender.com", // frontend URL
   credentials: true               // allow cookies
 }));
 app.use(express.urlencoded({extended:true}))

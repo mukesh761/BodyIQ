@@ -14,7 +14,7 @@ const Login = () => {
     console.log('signup clicked')
     const data={email,password}
     try{
-      const res=await axios.post('http://localhost:3000/user/login',data,{withCredentials:true})
+      const res=await axios.post('https://bodyiq-server.onrender.com/user/login',data,{withCredentials:true})
       console.log(res.data)
       alert("Signup Successful! Please Login" )
       localStorage.setItem('user',JSON.stringify(res.data.user))

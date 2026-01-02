@@ -112,7 +112,7 @@ export const getNutritionFromML = async (req, res) => {
     // ---- 3️⃣ Send to ML API ----
 
     const mlResponse = await axios.post(
-      "http://localhost:8000/predict",
+      "https://bodyiq-model.onrender.com/predict",
       mlPayload
     );
 

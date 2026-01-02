@@ -13,7 +13,7 @@ const Home = () => {
       protein:remainingProtein,
       fat:remainingFat}
     try {
-      const response=await axios.post('http://localhost:3000/food/suggestion',data,{withCredentials:true})
+      const response=await axios.post('https://bodyiq-server.onrender.com/food/suggestion',data,{withCredentials:true})
       const result=response.data
       console.log(result)
     } catch (error) {

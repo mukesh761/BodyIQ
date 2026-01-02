@@ -26,7 +26,7 @@ const {output,setoutput}=useContext(mloutputContext)
     const [result, setresult] = useState(false)
     const predictNutrition=async(data)=>{
       try {
-        const response=await axios.post('http://localhost:3000/model/predict',data,{withCredentials:true})
+        const response=await axios.post('https://bodyiq-server.onrender.com/model/predict',data,{withCredentials:true})
         console.log(response.data.data)
         setresult(response.data.data)
 
@@ -47,7 +47,7 @@ const {output,setoutput}=useContext(mloutputContext)
     setpages({...pages,page6:true})
     setpageData(finalpayload)
    
-  const response=await axios.post('http://localhost:3000/user/addinfo',finalpayload,{withCredentials:true})
+  const response=await axios.post('https://bodyiq-server.onrender.com/user/addinfo',finalpayload,{withCredentials:true})
    console.log(response.data)
    let user={name:response.data.user.name,goal:response.data.user.goal,
     email:response.data.user.email,
