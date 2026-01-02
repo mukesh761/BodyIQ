@@ -21,12 +21,13 @@ export const signUp = async (req, res) => {
         // console.log(newUser)
         const token = genToken(newUser)
         console.log({ token })
-        res.cookie("token", token, {
-            httpOnly: true,        // JS cannot access cookie (security)
-            secure: false,         // MUST be false on localhost
-            sameSite: "lax",       // BEST for development
-            maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
-        });
+         res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+   path: "/",  // Ensures the cookie works across subdomains
+    maxAge: 3600000*24*30,
+});
         const created_user = { name: newUser.name, email: newUser.email, dob: newUser.dob }
          return res.json({ user: created_user })
     } catch (error) {
@@ -53,12 +54,13 @@ export const login = async (req, res) => {
         console.log('working up to here')
          const token = genToken(newUser)
         console.log(token)
-        res.cookie("token", token, {
-            httpOnly: true,        // JS cannot access cookie (security)
-            secure: false,         // MUST be false on localhost
-            sameSite: "lax",       // BEST for development
-            maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
-        });
+        res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+   path: "/",  // Ensures the cookie works across subdomains
+    maxAge: 3600000*24*30,
+});
         res.json({ user })
         return
 
