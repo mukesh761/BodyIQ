@@ -2,12 +2,13 @@ import React from 'react'
 import loginImage from '../../assets/image.png'
 import bowl from '../../assets/bowl.png'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [email, setemail] = useState(null)
     const [password, setpassword] = useState(null)
     const [loading, setloading] = useState(false)
-
+    const navigate=useNavigate()
     const handleSubmit=async(e)=>{
     e.preventDefault();
     setloading(true)
@@ -59,7 +60,9 @@ const Login = () => {
             
         </form>
         <div className=' mb-5'>
-            <p><a href="/signup" className='text-blue-500 mb-5'>Don't have an account? Sign up</a></p>
+            <button className='text-blue-500 mb-5'
+            onClick={()=>navigate('/signup')}
+            >Don't have an account? Sign up</button>
         </div>
     </div>
     </div>
