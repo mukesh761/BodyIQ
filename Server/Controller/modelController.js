@@ -1,5 +1,6 @@
 import axios from "axios";
 import { userModel } from "../Schema/userSchema.js";
+import {DailyRequirement} from '..//Schema/dailyRequirement.js'
 
 export const getNutritionFromML = async (req, res) => {
   try {
@@ -115,11 +116,19 @@ export const getNutritionFromML = async (req, res) => {
       mlPayload
     );
 
-    // ---- 4️⃣ Send response to frontend ----
+
+    const updateDailyReq=await DailyRequirement.findOneAndUpdate({userId:user._id},{
+      
+          pCalories:mlResponse.data.result[0][0],
+      pProtein:mlResponse.data.result[0][1],
+      pFat:mlResponse.data.result[0][2]
+    
+    },{new:true})
+    const populated=await userModel.findOne(user._id).populate('dailyRequirement')
+    console.log(user)
     res.json({
-      success: true,
-      mlInput: mlPayload,
-      recommendation: mlResponse.data
+      message:'user updated succesfully',
+      data:populated
     });
     
   } catch (error) {

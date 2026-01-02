@@ -27,8 +27,8 @@ const {output,setoutput}=useContext(mloutputContext)
     const predictNutrition=async(data)=>{
       try {
         const response=await axios.post('http://localhost:3000/model/predict',data,{withCredentials:true})
-        console.log(response.data)
-        setresult(response.data?.recommendation?.result)
+        console.log(response.data.data)
+        setresult(response.data.data)
 
 
       } catch (error) {
@@ -38,7 +38,7 @@ const {output,setoutput}=useContext(mloutputContext)
     }
     useEffect(() => {
      if(result){
-      setoutput(result)
+      setuser(result)
       navigate('/')
      }
     },[result,setoutput,setresult])

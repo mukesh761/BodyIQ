@@ -2,11 +2,27 @@ import React, { useContext } from 'react'
 import NutrientRing from '../NutrientRing.jsx'
 import { mloutputContext } from '../../Context/mloutput.jsx'
 import { userContext } from '../../Context/userContext.jsx'
+import axios from 'axios'
+
+
 
 const Home = () => {
-  const {output,setoutput}=useContext(mloutputContext)
+  const suggestedFoods=async (remainingCalories, remainingProtein, remainingFat )=>{
+    const data={
+      calories:remainingCalories,
+      protein:remainingProtein,
+      fat:remainingFat}
+    try {
+      const response=await axios.post('http://localhost:3000/food/suggestion',data,{withCredentials:true})
+      const result=response.data
+      console.log(result)
+    } catch (error) {
+      console.error('Error fetching food suggestions:',error)
+    }
+  }
+  // const {output,setoutput}=useContext(mloutputContext)
   const {user,setuser}=useContext(userContext)
-  console.log(output)
+  console.log(user.dailyRequirement[0].pProtein)
   return (
     <div>
       <div className='p-10'>
@@ -16,7 +32,7 @@ const Home = () => {
           </h1>
         </div>
         <div>
-          <h1 className='font-semibold text-xl '>Welcome Back ,Mukesh  !</h1>
+          <h1 className='font-semibold text-xl '>Welcome Back ,{user.name}  !</h1>
           <p className='text-gray-500'>Here is your latest health overview and nutrient recommendation </p>
         </div>
       </div>
@@ -52,7 +68,7 @@ const Home = () => {
             <NutrientRing
               label="Protein"
               consumed={100}
-              target={Math.round(output[0][1])}
+              target={Math.round(user.dailyRequirement[0].pProtein)}
               color="#e8734f"
             />
           </div>
@@ -60,7 +76,7 @@ const Home = () => {
             <NutrientRing
               label="fat"
               consumed={10}
-              target={Math.round(output[0][2])}
+              target={Math.round(user.dailyRequirement[0].pFat)}
               color="#b5ae4a"
             />
           </div>
@@ -68,18 +84,11 @@ const Home = () => {
             <NutrientRing
               label="Calories"
               consumed={105}
-              target={Math.round(output[0][0])}
+              target={Math.round(user.dailyRequirement[0].pCalories)}
               color="#22C55E"
             />
           </div>
-          <div>
-            <NutrientRing
-              label="Carbs"
-              consumed={100}
-              target={Math.round(output[0][3])}
-              color="#22C55E"
-            />
-          </div>
+
         </div>
       </div>
       <div className=' pl-10 pr-10'>
@@ -87,12 +96,7 @@ const Home = () => {
           <h1 >Suggested Food</h1>
         </div>
         <div className=' rounded-md w-50 p-5 mt-5 shadow-[2px_4px_6px_-1px_rgba(0,0,0,0.2),-2px_-2px_4px_-1px_rgba(0,0,0,0.2)] flex flex-col justify-center items-center'>
-          <h1 className='font-semibold ' >food Name</h1>
-          <p>calories:120 kcl</p>
-          <p>protein:20 g</p>
-          <p>fat:10 g</p>
-          <p>type: Veg</p>
-          <button>Add this</button>
+          <h1 className='font-bold text-lg'>Food suggestions will be displayed here</h1>
         </div>
       </div>
     </div>
